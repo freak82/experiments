@@ -1,5 +1,6 @@
 *.d
 *.o
+*.pch
 *.gch
 *.swp
 *.bin
