@@ -1,5 +1,9 @@
 #pragma once
 
+struct arena
+{
+};
+
 template <typename T>
 class async_gen
 {
@@ -133,6 +137,31 @@ public:
         {
             ::puts("promise_type::unhandled_exception");
             ::exit(1);
+        }
+
+        template <typename... Args>
+        void* operator new(size_t sz, Args&&...)
+        {
+            ::puts("operator new(sz)");
+            return ::malloc(sz);
+        }
+        template <typename... Args>
+        void* operator new(size_t sz, arena&, Args&&...)
+        {
+            ::puts("operator new(sz, arena)");
+            return ::malloc(sz);
+        }
+        template <typename This, typename... Args>
+        void* operator new(size_t sz, const This&, arena&, Args&&...)
+        {
+            ::puts("operator new(sz, this, arena)");
+            return ::malloc(sz);
+        }
+        void operator delete(void* p, size_t)
+        {
+
+            ::puts("operator delete(void*, size_t)");
+            ::free(p);
         }
     };
 };

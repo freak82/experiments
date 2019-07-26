@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // C++ std headers
 #include <cstdio>
+#include <cstring>
 #include <utility>
 
 #include <experimental/coroutine>
