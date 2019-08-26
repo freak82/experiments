@@ -31,7 +31,7 @@ CXXFLAGS=-c -MMD -O2 -std='c++17' \
 		 -isystem$(X3ME_LIBS_PATH)/boost_1_69_0/ \
 		 -I ./
 LDFLAGS=
-BINARY=string_dynarray
+BINARY=string_dynarray.bin
 
 ################################################################################
 

@@ -1,4 +1,5 @@
 #include "xutils/string_dynarray.h"
+#include "xutils/unsafe_bit_cast.h"
 
 namespace xutils
 {
@@ -115,6 +116,21 @@ inline string_dynarray::iterator string_dynarray::begin() const noexcept
 inline string_dynarray::iterator string_dynarray::end() const noexcept
 {
     return {this, cnt_};
+}
+
+
+inline std::string_view string_dynarray::operator[](size_t idx) const noexcept
+{
+    X3ME_ASSERT(idx < cnt_);
+    // The offsets to the strings are stored as uint32_t in the data_ member.
+    // The number of the offsets is always cnt_ + 1.
+    const auto pos0 = idx * sizeof(uint32_t);
+    const auto pos1 = (idx + 1) * sizeof(uint32_t);
+    const auto off0 = unsafe_bit_cast<uint32_t>(&data_[pos0]);
+    const auto off1 = unsafe_bit_cast<uint32_t>(&data_[pos1]);
+    const auto data = data_.get() + off0;
+    const auto size = off1 - off0;
+    return {data, size};
 }
 
 inline size_t string_dynarray::size() const noexcept
