@@ -4,6 +4,7 @@
 *.gch
 *.swp
 *.bin
+nonius*
 Cargo.lock
 */target/.rustc_info.json
 */target/debug/*
