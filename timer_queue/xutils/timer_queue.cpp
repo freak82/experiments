@@ -11,21 +11,6 @@ timer_queue::timer_queue(boost::asio::io_context& io_ctx) noexcept
 
 timer_queue::~timer_queue() noexcept = default;
 
-timer_queue::timer_queue(timer_queue&& rhs) noexcept
-: entries_{std::move(rhs.entries_)}, timer_{std::move(rhs.timer_)}
-{
-}
-
-timer_queue& timer_queue::operator=(timer_queue&& rhs) noexcept
-{
-    if (X3ME_LIKELY(this != &rhs))
-    {
-        entries_ = std::move(rhs.entries_);
-        timer_   = std::move(rhs.timer_);
-    }
-    return *this;
-}
-
 void timer_queue::remove_all() noexcept
 {
     entries_.clear();

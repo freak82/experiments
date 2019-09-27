@@ -13,6 +13,7 @@ int main()
     tq.enqueue_callback(10s, [&] {
         std::printf("The fifth callback\n");
         tq.remove_all();
+        tq.enqueue_callback(1s, [] { std::printf("The last callback\n"); });
     });
     tq.enqueue_callback(11s, [] { std::printf("No called callback\n"); });
     tq.enqueue_callback(5s, [&] {

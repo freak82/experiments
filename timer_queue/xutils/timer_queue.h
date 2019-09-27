@@ -37,8 +37,12 @@ private:
 public:
     explicit timer_queue(boost::asio::io_context& io_ctx) noexcept;
     ~timer_queue() noexcept;
-    timer_queue(timer_queue&&) noexcept;
-    timer_queue& operator=(timer_queue&&) noexcept;
+
+    // The move operations are disabled because moving the queue while
+    // there are pending callbacks is UB and thus these operations are
+    // dangerous. Can be added if really needed.
+    timer_queue(timer_queue&&) = delete;
+    timer_queue& operator=(timer_queue&&) = delete;
 
     timer_queue(const timer_queue&) = delete;
     timer_queue& operator=(const timer_queue&) = delete;
@@ -47,6 +51,8 @@ public:
     void enqueue_callback(duration expiry, Callback&& cb) noexcept;
 
     // Removes all currently enqueued timer callbacks without calling them.
+    // Note that if there are expired callbacks waiting to be called they
+    // won't be removed by this call.
     void remove_all() noexcept;
 
 private:
