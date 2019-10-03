@@ -10,3 +10,4 @@ Cargo.lock
 */target/.rustc_info.json
 */target/debug/*
 */target/release/*
+!shadow_log_parser/main.d
