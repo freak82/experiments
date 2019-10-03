@@ -11,3 +11,4 @@ Cargo.lock
 */target/debug/*
 */target/release/*
 !shadow_log_parser/main.d
+shadow_log_parser/*.log*
